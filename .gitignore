@@ -1,0 +1,8 @@
+*.o
+fc
+luajit
+
+# MacOS Cache
+.DS_Store
+
+

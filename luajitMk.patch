@@ -1,0 +1,8 @@
+73c73
+< BUILDMODE= mixed
+---
+> #BUILDMODE= mixed
+76c76
+< #BUILDMODE= static
+---
+> BUILDMODE= static
