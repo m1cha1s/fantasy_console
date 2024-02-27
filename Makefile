@@ -1,51 +1,21 @@
-CC := gcc
-CFLAGS := -O2 -Wall -Werror
+.PHONY: all clean luajit raylib submodules
 
-CXX := g++
-CXXFLAGS := $(CFLAGS)
-
-INCLUDE := -I./luajit/src -I./raylib/src
-
-LIBS := -L./luajit/src -lluajit 
-LIBS += -L./raylib/src -lraylib
-
-LIBS += -lm
-
-EXE := fc
-OBJ := main.o
-
-fc: $(OBJ)
-	$(CC) -o $@ $^ $(LIBS)
-
-%.o: %.c
-	$(CC) $< -o $@ -c $(CFLAGS) $(INCLUDE)
-
-%.o: %.cpp
-	$(CXX) $< -o $@ -c $(CXXFLAGS) $(INCLUDE)
-
-.PHONY: all clean_all clean clean_deps deps luajit raylib submodules
-
-all:
-	make -C . deps -j
-	make -C . -j
-
-deps: luajit raylib
-
-raylib: submodules
+all: submodules
+	# Building raylib
 	PLATFORM=PLATFORM_DESKTOP make -C raylib/src -j
-	
-luajit: submodules
+	# Building luajit
 	-patch -N -r- ./luajit/src/Makefile patches/luajitMk.patch
 	make -C luajit -j
-
-clean_all: clean clean_deps
+	# Building the project
+	make -C src -j
 
 clean:
-	rm -f $(EXE) $(OBJ)
-
-clean_deps:
+	# Clean the project
+	make -C src clean
+	# Clean luajit
 	-patch -R ./luajit/src/Makefile patches/luajitMk.patch
 	make -C luajit clean
+	# Clean raylib
 	make -C raylib/src clean
 
 submodules:
