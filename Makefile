@@ -19,12 +19,16 @@ fc: $(OBJ)
 %.o: %.cpp
 	$(CXX) $< -o $@ -c $(CXXFLAGS) $(INCLUDE)
 
-.PHONY: clean_all clean clean_deps deps luajit submodules
+.PHONY: all clean_all clean clean_deps deps luajit submodules
+
+all:
+	make -C . deps -j
+	make -C . -j
 
 deps: luajit
 	
 luajit: submodules
-	-patch -N -r- ./luajit/src/Makefile luajitMk.patch
+	-patch -N -r- ./luajit/src/Makefile patches/luajitMk.patch
 	make -C luajit -j
 
 clean_all: clean clean_deps
@@ -33,6 +37,7 @@ clean:
 	rm -f $(EXE) $(OBJ)
 
 clean_deps:
+	-patch -R ./luajit/src/Makefile patches/luajitMk.patch
 	make -C luajit clean
 
 submodules:

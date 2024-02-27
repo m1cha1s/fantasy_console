@@ -3,6 +3,5 @@ Another Lua based fantasy console
 
 ## How to build
 ```sh
-make deps -j`nproc`
-make -j`nproc`
+make all -j`nproc`
 ```
