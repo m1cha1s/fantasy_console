@@ -1,7 +1,5 @@
 *.o
 fc
-luajit
-raylib
 
 # MacOS Cache
 .DS_Store
