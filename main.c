@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 // Raylib
-//#include <raylib.h>
+#include <raylib.h>
 
 // Lua
 #include <lua.h>
@@ -10,7 +10,7 @@
 #include <luajit.h>
 
 int main(int argc, char** argv) {
-    /*InitWindow(800,800, "fantasy_console");
+    InitWindow(800,800, "fantasy_console");
 
     SetTargetFPS(60);
 
@@ -25,7 +25,6 @@ int main(int argc, char** argv) {
     CloseWindow();
 
     return 0;
-    */
 
 //    int status = 0;
     lua_State *L;
