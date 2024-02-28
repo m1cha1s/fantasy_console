@@ -7,5 +7,6 @@
 
 int gfx_open(lua_State *L);
 int gfx_clear(lua_State *L);
+int gfx_text(lua_State *L);
 
 #endif
