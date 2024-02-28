@@ -28,19 +28,19 @@ static Color tableToColor(lua_State *L) {
     lua_pushstring(L, "g");
     lua_gettable(L, -2);
     if (lua_isnumber(L, -1)) {
-        c.r = (unsigned char)lua_tointeger(L, -1);
+        c.g = (unsigned char)lua_tointeger(L, -1);
         lua_pop(L, 1);
     }
     lua_pushstring(L, "b");
     lua_gettable(L, -2);
     if (lua_isnumber(L, -1)) {
-        c.r = (unsigned char)lua_tointeger(L, -1);
+        c.b = (unsigned char)lua_tointeger(L, -1);
         lua_pop(L, 1);
     }
     lua_pushstring(L, "a");
     lua_gettable(L, -2);
     if (lua_isnumber(L, -1)) {
-        c.r = (unsigned char)lua_tointeger(L, -1);
+        c.a = (unsigned char)lua_tointeger(L, -1);
         lua_pop(L, 1);
     }
 
