@@ -16,23 +16,49 @@ int gfx_open(lua_State *L) {
     return 0;
 }
 
+static Color tableToColor(lua_State *L) {
+    Color c = {0,0,0,255};
+
+    lua_pushstring(L, "r");
+    lua_gettable(L, -2);
+    if (lua_isnumber(L, -1)) {
+        c.r = (unsigned char)lua_tointeger(L, -1);
+        lua_pop(L, 1);
+    }
+    lua_pushstring(L, "g");
+    lua_gettable(L, -2);
+    if (lua_isnumber(L, -1)) {
+        c.r = (unsigned char)lua_tointeger(L, -1);
+        lua_pop(L, 1);
+    }
+    lua_pushstring(L, "b");
+    lua_gettable(L, -2);
+    if (lua_isnumber(L, -1)) {
+        c.r = (unsigned char)lua_tointeger(L, -1);
+        lua_pop(L, 1);
+    }
+    lua_pushstring(L, "a");
+    lua_gettable(L, -2);
+    if (lua_isnumber(L, -1)) {
+        c.r = (unsigned char)lua_tointeger(L, -1);
+        lua_pop(L, 1);
+    }
+
+    return c;
+}
+
 int gfx_clear(lua_State *L) {
-    unsigned char r=0,g=0,b=0,a=255;
 
-    if (lua_isnumber(L, 1) && lua_gettop(L) >= 1) {
-        r = lua_tointeger(L, 1);
-    }
-    if (lua_isnumber(L, 2) && lua_gettop(L) >= 2) {
-        g = lua_tointeger(L, 2);
-    }
-    if (lua_isnumber(L, 3) && lua_gettop(L) >= 3) {
-        b = lua_tointeger(L, 3);
-    }
-    if (lua_isnumber(L, 4) && lua_gettop(L) >= 4) {
-        a = lua_tointeger(L, 4);
-    }
+    Color c = {0,0,0,0};
 
-    ClearBackground((Color){r,g,b,a});
+    if (lua_gettop(L) < 1) goto DONE;
+    if (!lua_istable(L, 1)) goto DONE;
+
+    c = tableToColor(L);
+
+DONE:
+
+    ClearBackground(c);
     
     return LUA_OK;
 }

@@ -1,3 +1,5 @@
+BACKGROUND = { r=255,g=127,b=127,a=255 }
+
 function Init()
     print("INIT")
 end
@@ -7,7 +9,7 @@ function Update(dt)
 end
 
 function Draw()
-    gfx.clear(255,127,127,255)
+    gfx.clear(BACKGROUND)
 end
 
 function Deinit()
