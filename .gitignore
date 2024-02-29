@@ -78,6 +78,8 @@
 
 **/compile_commands.json
 
+CMakeSettings.json
+
 
 
 include/divisible/*
@@ -89,6 +91,7 @@ include/divisible/*
 ## Local 
 
 .vs
+out
 
 
 .idea/*.xml

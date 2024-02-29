@@ -13,9 +13,16 @@
 
 lua_State *L;
 
+const char* script = NULL;
+
 int main(int argc, char** argv) {
     // TODO: Add some kind of rom browser
-    if (argc <= 1) return -1;
+    if (argc <= 1) {
+        script = "../../../examples/hello.lua";
+    }
+    else {
+        script = argv[1];
+    }
 
     L = luaL_newstate();
     if (!L) {
@@ -28,7 +35,7 @@ int main(int argc, char** argv) {
     // Add gfx capabilities under gfx module
     gfx_open(L);
 
-    if (luaL_dofile(L, argv[1]) == LUA_OK) {
+    if (luaL_dofile(L, script) == LUA_OK) {
         lua_pop(L, lua_gettop(L));
     }
 
