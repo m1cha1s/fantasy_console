@@ -5,6 +5,7 @@
 const struct luaL_Reg GfxMod[] = {
     { "clear", gfx_clear },
     { "text", gfx_text },
+    { "pixel", gfx_pixel },
     { NULL, NULL },
 };
 
@@ -76,9 +77,7 @@ int gfx_text(lua_State *L) {
 
     if (!lua_istable(L, 5)) goto ERR;
     
-    //const char *text = lua_tostring(L, 1);
-    const char *text = "Balls";
-    //    printf("\t%ld\n", lua_strlen(L, 1));
+    const char *text = lua_tostring(L, 1);
     int x = lua_tointeger(L, 2);
     int y = lua_tointeger(L, 3);
     int size = lua_tointeger(L, 4);
@@ -90,6 +89,26 @@ int gfx_text(lua_State *L) {
 
 ERR:
 
+    luaL_error(L, "Invalid args");
+    return 0;
+}
+
+int gfx_pixel(lua_State* L) {
+    if (lua_gettop(L) < 3) goto ERR;
+
+    if (!lua_isnumber(L, 1)) goto ERR;
+    if (!lua_isnumber(L, 2)) goto ERR;
+    if (!lua_istable(L, 3)) goto ERR;
+
+    int x = lua_tointeger(L, 1);
+    int y = lua_tointeger(L, 2);
+    Color c = tableToColor(L, 3);
+
+    DrawPixel(x, y, c);
+
+    return 0;
+
+ERR:
     luaL_error(L, "Invalid args");
     return 0;
 }

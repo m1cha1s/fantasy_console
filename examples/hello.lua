@@ -15,7 +15,18 @@ local vel = {
     y = 10,
 }
 
+i = 1
+t = {
+    "ASDF",
+    "SDFA",
+    "DFAS",
+    "FASD",
+}
+
+pdt = 1
+
 function Update(dt)
+    pdt = dt
     --print("dt: " .. dt)
     pos.x = pos.x + vel.x*dt
     pos.y = pos.y + vel.y*dt
@@ -32,11 +43,30 @@ function Update(dt)
     if pos.y < 0 then
         vel.y = - vel.y
     end
+
+    i = i + dt*10
+    if i > 5 then i = 1 end
 end
 
 function Draw()
+
+    for x=0,800 do
+        for y=0,800 do
+            u = x/800
+            v = y/800
+
+            gfx.pixel(x, y, {r=255*u,g=255*v,b=127,a=255})
+        end
+    end
+
+    --[[
+
     gfx.clear(BACKGROUND)
-    gfx.text("Balls", pos.x, pos.y, 40, BLACK)
+
+    gfx.text(tostring(1/pdt), 0, 0, 40, BLACK)
+
+    gfx.text(t[math.floor(i)], pos.x, pos.y, 40, BLACK)
+    --]]
 end
 
 function Deinit()
