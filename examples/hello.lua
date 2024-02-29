@@ -3,6 +3,9 @@ BACKGROUND = { r=255,g=127,b=127,a=255 }
 
 function Init()
     print("INIT")
+
+    -- initialize the random function
+    math.randomseed(os.time())
 end
 
 local pos = {
@@ -49,24 +52,8 @@ function Update(dt)
 end
 
 function Draw()
-
-    for x=0,800 do
-        for y=0,800 do
-            u = x/800
-            v = y/800
-
-            gfx.pixel(x, y, {r=255*u,g=255*v,b=127,a=255})
-        end
-    end
-
-    --[[
-
     gfx.clear(BACKGROUND)
-
-    gfx.text(tostring(1/pdt), 0, 0, 40, BLACK)
-
-    gfx.text(t[math.floor(i)], pos.x, pos.y, 40, BLACK)
-    --]]
+    gfx.rect(10, 10, 100, 100, BLACK)
 end
 
 function Deinit()
