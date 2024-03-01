@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.16)
 
+execute_process(
+    COMMAND git submodule update --init
+)
+
 include(luajit.cmake)
 
 project(fantasy_console C)
 
 set(CMAKE_C_STANDARD 99)
-
-execute_process(
-    COMMAND git submodule update --init
-)
 
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/raylib)
 
