@@ -10,20 +10,13 @@
 #include <luajit.h>
 
 #include "gfx.h"
+#include "btn.h"
 
 lua_State *L;
 
 const char* script = NULL;
 
-int main(int argc, char** argv) {
-    // TODO: Add some kind of rom browser
-    if (argc <= 1) {
-        script = "../../../examples/hello.lua";
-    }
-    else {
-        script = argv[1];
-    }
-
+static int lua_init() {
     L = luaL_newstate();
     if (!L) {
         return -1;
@@ -34,10 +27,26 @@ int main(int argc, char** argv) {
 
     // Add gfx capabilities under gfx module
     gfx_open(L);
+    // Add input capabilities under btn module
+    btn_open(L);
 
     if (luaL_dofile(L, script) == LUA_OK) {
         lua_pop(L, lua_gettop(L));
     }
+
+    return 0;
+}
+
+int main(int argc, char** argv) {
+    // TODO: Add some kind of rom browser
+    if (argc <= 1) {
+        script = "../../../examples/hello.lua";
+    }
+    else {
+        script = argv[1];
+    }
+
+    lua_init(); // TODO: Error reporting
 
     InitWindow(800,800, "fantasy_console");
 
@@ -52,6 +61,19 @@ int main(int argc, char** argv) {
     lua_pop(L, lua_gettop(L));
 
     while(!WindowShouldClose()) {
+        // Perform a reload
+        if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_R)) {
+            lua_close(L);
+            lua_init(); // TODO: Error reporting
+
+            lua_getglobal(L, "Init");
+            if (lua_isfunction(L, -1)) {
+                if (lua_pcall(L, 0, 1, 0) == LUA_OK) {
+                    lua_pop(L, lua_gettop(L));
+                }
+            }
+            lua_pop(L, lua_gettop(L));
+        }
 
         // Call the lua update funciton
         lua_getglobal(L, "Update");
