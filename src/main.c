@@ -32,6 +32,8 @@ static int lua_init() {
 
     if (luaL_dofile(L, script) == LUA_OK) {
         lua_pop(L, lua_gettop(L));
+    } else {
+        printf("LUA ERR: %s\n", lua_tostring(L, -1));
     }
 
     return 0;
