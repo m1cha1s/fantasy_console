@@ -48,8 +48,8 @@ local function planet_attract(self, other)
     local dy = other.pos.y-self.pos.y
 
     local r2 = sq(dx)+sq(dy)
-    local theta = math.atan(dy, dx)
-
+    local theta = math.atan2(dy, dx)
+    
     local F = -G*self.m*other.m/r2
 
     local Fv = {
@@ -75,11 +75,12 @@ local planets = {}
 function Init()
     math.randomseed(os.time())
 
-    for i=1,2,1 do
+    for i=1,11,1 do
         local x = math.random(0, 800)
         local y = math.random(0, 800)
         local r = math.random(0, 80)
-        local m = math.pi*sq(r)*10000000
+        local m = math.pi*sq(r)*1000000
+        print(m)
         local color = planet_colors[math.random(1,#planet_colors)]
         planets[i] = planet_new(x,y,r,m,color)
     end
