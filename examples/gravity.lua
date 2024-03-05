@@ -40,7 +40,9 @@ local function planet_update(self, dt)
 end
 
 local function planet_attract(self, other)
-    if self == other then return end
+    -- print(self)
+    -- print(other)
+    -- if self == other then return end
 
     local dx = other.pos.x-self.pos.x
     local dy = other.pos.y-self.pos.y
@@ -48,7 +50,7 @@ local function planet_attract(self, other)
     local r2 = sq(dx)+sq(dy)
     local theta = math.atan(dy, dx)
 
-    local F = G*self.m*other.m/r2
+    local F = -G*self.m*other.m/r2
 
     local Fv = {
         x = math.cos(theta)*F,
@@ -73,7 +75,7 @@ local planets = {}
 function Init()
     math.randomseed(os.time())
 
-    for i=1,11,1 do
+    for i=1,2,1 do
         local x = math.random(0, 800)
         local y = math.random(0, 800)
         local r = math.random(0, 80)
@@ -84,14 +86,17 @@ function Init()
 end
 
 function Update(dt)
-    for _,p1 in pairs(planets) do
-        for _,p2 in pairs(planets) do
-            planet_attract(p1, p2)
+    for k1,p1 in pairs(planets) do
+        for k2,p2 in pairs(planets) do
+            if k1 ~= k2 then
+                -- print(p1)
+                planet_attract(p1, p2)
+            end
         end
     end
 
     for _,p in pairs(planets) do
-        planet_update(p, dt)
+        planet_update(p, dt*1000)
     end
 end
 
