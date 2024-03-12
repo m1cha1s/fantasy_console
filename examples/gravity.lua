@@ -48,13 +48,13 @@ local function planet_attract(self, other)
     local dy = other.pos.y-self.pos.y
 
     local r2 = sq(dx)+sq(dy)
-    local theta = math.atan2(dy, dx)
+    local theta = m.atan2(dy, dx)
     
     local F = -G*self.m*other.m/r2
 
     local Fv = {
-        x = math.cos(theta)*F,
-        y = math.sin(theta)*F,
+        x = m.cos(theta)*F,
+        y = m.sin(theta)*F,
     }
 
     planet_apply_force(other, Fv)
@@ -79,7 +79,7 @@ function Init()
         local x = math.random(0, 800)
         local y = math.random(0, 800)
         local r = math.random(0, 80)
-        local m = math.pi*sq(r)*1000000
+        local m = m.PI*sq(r)*1000000
         print(m)
         local color = planet_colors[math.random(1,#planet_colors)]
         planets[i] = planet_new(x,y,r,m,color)
@@ -90,13 +90,14 @@ function Update(dt)
     for k1,p1 in pairs(planets) do
         for k2,p2 in pairs(planets) do
             if k1 ~= k2 then
-                -- print(p1)
+                --print(k1, k2)
                 planet_attract(p1, p2)
             end
         end
     end
 
-    for _,p in pairs(planets) do
+    for k,p in pairs(planets) do
+        print(k)
         planet_update(p, dt*1000)
     end
 end

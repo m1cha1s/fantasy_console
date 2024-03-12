@@ -11,6 +11,7 @@
 
 #include "gfx.h"
 #include "btn.h"
+#include "m.h"
 
 lua_State *L;
 
@@ -29,6 +30,8 @@ static int lua_init() {
     gfx_open(L);
     // Add input capabilities under btn module
     btn_open(L);
+    // Add math library under m module
+    m_open(L);
 
     if (luaL_dofile(L, script) == LUA_OK) {
         lua_pop(L, lua_gettop(L));
