@@ -75,7 +75,7 @@ local planets = {}
 function Init()
     math.randomseed(os.time())
 
-    for i=1,11,1 do
+    for i=1,3,1 do
         local x = math.random(0, 800)
         local y = math.random(0, 800)
         local r = math.random(0, 80)
